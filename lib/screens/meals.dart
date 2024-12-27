@@ -7,9 +7,10 @@ class MealsScreen extends StatelessWidget {
   const MealsScreen({
     super.key,
     this.title,
-    required this.meals,required this.onToggleFavorite,
+    required this.meals,
+    
   });
-  final void Function(Meal meal) onToggleFavorite;
+  
   void selectMeal(
     BuildContext context,
     Meal meal,
@@ -18,7 +19,7 @@ class MealsScreen extends StatelessWidget {
       MaterialPageRoute(
         builder: (ctx) => MealDetailsScreen(
           meal: meal,
-          onToggleFavorite: onToggleFavorite,
+         
         ),
       ),
     );
@@ -61,7 +62,7 @@ class MealsScreen extends StatelessWidget {
         ),
       );
     }
-    if(title==null){
+    if (title == null) {
       return content;
     }
 
