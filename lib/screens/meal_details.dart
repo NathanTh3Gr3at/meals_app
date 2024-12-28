@@ -16,35 +16,49 @@ class MealDetailsScreen extends ConsumerWidget {
     final favoriteMeals = ref.watch(favoriteMealsProvider);
 
     final isFavorite = favoriteMeals.contains(meal);
-print('isFavorite: $isFavorite');
+
     return Scaffold(
-      
         appBar: AppBar(title: Text(meal.title), actions: [
           IconButton(
             onPressed: () {
               final wasAdded = ref
                   .read(favoriteMealsProvider.notifier)
                   .toggleMealFavoriteStatus(meal);
-                  print('wasAdded: $wasAdded');
+
               ScaffoldMessenger.of(context).clearSnackBars();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                      isFavorite? 'Meal added as a favorite.' : 'Meal removed.'),
+                    wasAdded ? 'Meal added as a favorite.' : 'Meal removed.',
+                  ),
                 ),
               );
             },
-            icon: Icon(isFavorite ? Icons.star : Icons.star_border),
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) {
+                return RotationTransition(
+                    turns: Tween(begin: 0.5, end: 1.0).animate(animation),
+                    child: child);
+              },
+              child: Icon(
+                isFavorite ? Icons.star : Icons.star_border,
+                key: ValueKey(isFavorite),
+              ),
+            ),
           )
         ]),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Image.network(
-                meal.imageUrl,
-                height: 300,
-                width: double.infinity,
-                fit: BoxFit.cover,
+              Hero(
+                tag: meal.id,
+                child: Image.network(
+                  meal.imageUrl,
+                  height: 300,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(height: 14),
               Text(
