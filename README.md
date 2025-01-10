@@ -7,6 +7,12 @@ A recipe that allows users to view recipes and see the instructions and ingredie
 ## Features:
   - Filters for recipes.
   - Save recipes for later.
+  - View recipes
+
+## Packages Used:
+  - Google Fonts
+  - Transparent Image
+  - Riverpod
 ## Images:
 <table>
   <tr>
